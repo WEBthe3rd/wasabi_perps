@@ -4,6 +4,7 @@
     "test": "npx hardhat test"
   },
   "dependencies": {
+    "@1inch/limit-order-protocol-contract": "github:1inch/limit-order-protocol#master",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
     "@openzeppelin/contracts": "^5.0.2",
