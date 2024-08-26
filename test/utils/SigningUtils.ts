@@ -18,7 +18,7 @@ export type Signature = {
   s: Hex;
 }
 
-type EIP712TypeField = {
+export type EIP712TypeField = {
   name: string;
   type: string;
 }
@@ -45,13 +45,13 @@ const EIP712DomainTypes: EIP712TypeField[] = [
   { name: "verifyingContract", type: "address" },
 ];
 
-const FunctionCallDataTypes: EIP712TypeField[] = [
+export const FunctionCallDataTypes: EIP712TypeField[] = [
   { name: "to", type: "address" },
   { name: "value", type: "uint256" },
   { name: "data", type: "bytes" },
 ];
 
-const OpenPositionRequestTypes: EIP712TypeField[] = [
+export const OpenPositionRequestTypes: EIP712TypeField[] = [
   { name: "id", type: "uint256" },
   { name: "currency", type: "address" },
   { name: "targetCurrency", type: "address" },
@@ -63,7 +63,7 @@ const OpenPositionRequestTypes: EIP712TypeField[] = [
   { name: "functionCallDataList", type: "FunctionCallData[]" },
 ];
 
-const PositionTypes: EIP712TypeField[] = [
+export const PositionTypes: EIP712TypeField[] = [
   { name: "id", type: "uint256" },
   { name: "trader", type: "address" },
   { name: "currency", type: "address" },
@@ -75,14 +75,14 @@ const PositionTypes: EIP712TypeField[] = [
   { name: "feesToBePaid", type: "uint256" },
 ];
 
-const ClosePositionRequestTypes: EIP712TypeField[] = [
+export const ClosePositionRequestTypes: EIP712TypeField[] = [
   { name: "expiration", type: "uint256" },
   { name: "interest", type: "uint256" },
   { name: "position", type: "Position" },
   { name: "functionCallDataList", type: "FunctionCallData[]" },
 ];
 
-const ClosePositionOrderTypes: EIP712TypeField[] = [
+export const ClosePositionOrderTypes: EIP712TypeField[] = [
   { name: "orderType", type: "uint8" },
   { name: "positionId", type: "uint256" },
   { name: "createdAt", type: "uint256" },
@@ -112,7 +112,7 @@ export function getDomainData(name: string, verifyingContract: Address): EIP712D
   return {
       name,
       version: '1',
-      chainId: hre.network.config.chainId!,
+      chainId: hre.network.config.chainId ?? 11155111,
       verifyingContract: getAddress(verifyingContract),
   };
 }

@@ -4,6 +4,8 @@ import {getAddress, encodeFunctionData, zeroAddress, maxUint256} from "viem";
 import { FunctionCallData } from "./PerpStructUtils";
 import {MockSwapAbi} from "./MockSwapAbi";
 import { ERC20Abi } from './ERC20Abi';
+import { Order } from '../../scripts/helpers/LimitOrderUtils';
+import { OrderbookAbi } from './OrderbookAbi';
 
 export function getApproveAndSwapFunctionCallData(
     address: Address,
@@ -97,6 +99,25 @@ export function getSwapFunctionCallDataExact(
             abi: [MockSwapAbi.find(a => a.type === "function" && a.name === "swapExact")!],
             functionName: "swapExact",
             args: [tokenIn, amountIn, tokenOut, amountOut]
+        })
+    }
+}
+
+export function getFillOrderFunctionCallData(
+    orderbook: Address,
+    order: Order,
+    r: string,
+    vs: string,
+    amount: bigint,
+    takerTraits: bigint
+): FunctionCallData {
+    return {
+        to: getAddress(orderbook),
+        value: order.takerAsset === zeroAddress ? amount : 0n,
+        data: encodeFunctionData({
+            abi: [OrderbookAbi.find(a => a.type === "function" && a.name === "fillOrder")!],
+            functionName: "fillOrder",
+            args: [order, r, vs, amount, takerTraits]
         })
     }
 }
