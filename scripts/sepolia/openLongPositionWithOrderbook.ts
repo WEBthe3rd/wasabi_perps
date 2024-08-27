@@ -100,9 +100,10 @@ async function main() {
     await signLimitOrder(order, sepolia.id, orderbookAddress, maker)
   );
 
-  const downPayment = takingAmount / 5n;
-  const principal = (takingAmount * 4n) / 5n;
+  const downPayment = takingAmount / 5n;      // 0.4 ETH
+  const principal = (takingAmount * 4n) / 5n; // 1.6 ETH
   const fee = parseEther("0.01");
+  
   const openPositionRequest: OpenPositionRequest = {
     id: 133742n,
     currency: weth,
@@ -161,6 +162,8 @@ async function main() {
     account: user.account,
     value: downPayment + fee,
   });
+  const positionHash = await longPool.read.positions([openPositionRequest.id]);
+  console.log(`Position hash: ${positionHash}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
